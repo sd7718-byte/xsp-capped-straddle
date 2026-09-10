@@ -1,5 +1,11 @@
 # XSP Capped-Straddle Research Engine
 
+[![CI](https://github.com/sd7718-byte/xsp-capped-straddle/actions/workflows/ci.yml/badge.svg)](https://github.com/sd7718-byte/xsp-capped-straddle/actions/workflows/ci.yml)
+
+**Evidence status:** pricing, signal, hedging, risk, and diagnostic components
+are tested; no historical out-of-sample return is claimed. See
+[RESULTS.md](RESULTS.md) for the required evidence and reporting template.
+
 An auditable Python research implementation of a delta-hedged, capped XSP
 straddle. The project separates signal construction from execution assumptions
 and subjects candidate results to spread, transaction-cost, hedge-frequency,
@@ -43,4 +49,3 @@ xsp-straddle diagnose --help
 Inputs must be point-in-time market data. Reported output should not be called
 an out-of-sample result unless the underlying dataset, chronology, costs, and
 validation split are independently documented.
-
