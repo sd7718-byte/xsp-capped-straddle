@@ -1,5 +1,6 @@
 import pandas as pd
 import pytest
+from pandas.api.types import is_datetime64_any_dtype
 
 from xsp_straddle.data import (
     DataValidationError,
@@ -37,7 +38,11 @@ def _quotes():
 def test_option_quote_validation_normalizes_and_sorts():
     result = validate_option_quotes(_quotes().iloc[::-1])
     assert list(result["option_type"].unique()) == ["C", "P"]
-    assert str(result["timestamp"].dtype) == "datetime64[ns, UTC]"
+    # Pandas may use nanosecond or microsecond backing storage depending on the
+    # installed version. The research invariant is timezone-aware UTC time,
+    # not a particular internal resolution.
+    assert is_datetime64_any_dtype(result["timestamp"])
+    assert str(result["timestamp"].dt.tz) == "UTC"
 
 
 def test_option_quote_validation_rejects_midpoint_only_and_crossed_inputs():
